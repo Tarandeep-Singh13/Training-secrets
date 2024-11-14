@@ -1,0 +1,30 @@
+name: Run Cat API Script
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  run-cat-api-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run script
+        env:
+          CAT_API_KEY: ${{ secrets.CAT_API_KEY }}
+        run: |
+          python cat_api.py
